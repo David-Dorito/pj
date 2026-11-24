@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 add() {
-	projects=$(awk -v proj_name=$1 -F ',' ' $1 == proj_name { print $1 }' ${pj_projects_file})
+	projects=$(awk -v proj_name=$1 -F ',' '$1 == proj_name { print $1 }' ${pj_projects_file})
 
 	if [[ ! -z ${projects} ]]; then
 		echo "project already exists"
@@ -12,7 +12,7 @@ add() {
 }
 
 delete() {
-	project=$(awk -v proj_name=$1 -F ',' ' $1 == proj_name { print $1 }' ${pj_projects_file})
+	project=$(awk -v proj_name=$1 -F ',' '$1 == proj_name { print $1 }' ${pj_projects_file})
 
 	if [[ -z ${project} ]]; then
 		echo "project doesn't exist"
@@ -23,7 +23,7 @@ delete() {
 }
 
 jump() {
-	path=$(awk -v proj_name=$1 -F ',' ' $1 == proj_name { print $2 }' ${pj_projects_file})
+	path=$(awk -v proj_name=$1 -F ',' '$1 == proj_name { print $2 }' ${pj_projects_file})
 
 	if [[ -z ${path} ]]; then
 		echo "project doesn't exist"
@@ -38,7 +38,7 @@ list() {
 }
 
 rename() {
-	project=$(awk -v proj_name=$1 -F ',' ' $1 == proj_name { print $1 }' ${pj_projects_file})
+	project=$(awk -v proj_name=$1 -F ',' '$1 == proj_name { print $1 }' ${pj_projects_file})
 
 	if [[ -z ${project} ]]; then
 		echo "project doesn't exist"
@@ -117,5 +117,8 @@ case "$1" in
 			echo "hint: help doesn't expect any arguments"
 		fi
 		help
+		;;
+	*)
+		echo "unknown function, use pj help to list functions"
 		;;
 esac
