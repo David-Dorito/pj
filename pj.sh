@@ -52,12 +52,12 @@ help() {
 	echo "pj - project jump"
 	echo "usage: source pj <function> <function args>"
 	echo "available functions:"
-	echo "1. jump <project name>"
-	echo "2. add <project name> <path, default current dir>"
-	echo "3. delete <project name>"
-	echo "4. list"
-	echo "5. rename <project name> <new project name>"
-	echo "6. help"
+	echo "1. cd <project name>: jump into project"
+	echo "2. touch <project name> <path, default current dir>: add project to registry"
+	echo "3. rm <project name>: remove project from registry"
+	echo "4. ls: list projects in registry"
+	echo "5. mv <project name> <new project name>: rename a project in the registry"
+	echo "6. help: i wonder what this could be"
 }
 
 if (( $# < 1 )); then
@@ -77,37 +77,37 @@ if [[ ! -e ${pj_projects_file} ]]; then
 fi
 
 case "$1" in
-	"add")
+	"touch")
 		if (( $# != 2 && $# != 3 )); then
-			echo "error: add expects 1 or 2 arguments"
+			echo "error: touch expects 1 or 2 arguments"
 			return 1
 		fi
 		add $2 $3
 		;;
-	"delete")
+	"rm")
 		if (( $# != 2 )); then
-			echo "error: delete expects 1 argument"
+			echo "error: rm expects 1 argument"
 			return 1
 		fi
 		delete $2
 		;;
-	"jump")
+	"cd")
 		if (( $# != 2 )); then
-			echo "error: jump expects 1 argument"
+			echo "error: cd expects 1 argument"
 			return 1
 		fi
 		jump $2
 		;;
-	"list")
+	"ls")
 		if (( $# != 1 )); then
-			echo "error: list doesn't expect any arguments"
+			echo "error: ls doesn't expect any arguments"
 			return 1
 		fi
 		list
 		;;
-	"rename")
+	"mv")
 		if (( $# != 3 )); then
-			echo "error: rename expects 2 arguments"
+			echo "error: mv expects 2 arguments"
 			return 1
 		fi
 		rename $2 $3
