@@ -18,7 +18,14 @@ delete() {
 }
 
 jump() {
-	echo ""
+	path=$(awk -v proj_name=$1 -F ',' ' $1 == proj_name { print $2 }' ${pj_projects_file})
+
+	if [[ -z ${path} ]]; then
+		echo "project doesnt exist"
+		return 1
+	fi
+
+	cd ${path}
 }
 
 list() {
@@ -59,18 +66,21 @@ fi
 
 case "$1" in
 	"add")
-		if (( $# == 2 || $# == 3 )); then
-			add $2 $3
-		else
+		if (( $# != 2 && $# != 3 )); then
 			echo "error: add expects 1 or 2 arguments"
 			return 1
 		fi
+		add $2 $3
 		;;
 	"delete")
 		delete
 		;;
 	"jump")
-		jump
+		if (( $# != 2 )); then
+			echo "error: jump expects 1 argument"
+			return 1
+		fi
+		jump $2
 		;;
 	"list")
 		list
