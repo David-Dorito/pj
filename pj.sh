@@ -14,6 +14,9 @@ add() {
 }
 
 delete() {
+	project=$(awk -v proj_name=$1 -F ',' ' $1 == proj_name { print $1 }' ${pj_projects_file})
+
+	sed -i "/${project}/d" ${pj_projects_file}
 }
 
 jump() {
@@ -72,7 +75,11 @@ case "$1" in
 		add $2 $3
 		;;
 	"delete")
-		delete
+		if (( $# != 2 )); then
+			echo "error: delete expects 1 argument"
+			return 1
+		fi
+		delete $2
 		;;
 	"jump")
 		if (( $# != 2 )); then
