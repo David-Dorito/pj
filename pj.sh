@@ -14,14 +14,13 @@ add() {
 }
 
 delete() {
-	echo ""
 }
 
 jump() {
 	path=$(awk -v proj_name=$1 -F ',' ' $1 == proj_name { print $2 }' ${pj_projects_file})
 
 	if [[ -z ${path} ]]; then
-		echo "project doesnt exist"
+		echo "project doesn't exist"
 		return 1
 	fi
 
@@ -29,7 +28,7 @@ jump() {
 }
 
 list() {
-	echo ""
+	awk -v proj_name=$1 -F ',' '{ print $1 ": " $2 }' ${pj_projects_file}
 }
 
 rename() {
